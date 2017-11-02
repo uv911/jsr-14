@@ -1,5 +1,5 @@
 
-$(function(numAnimals) {
+$(function(maxNumAnimals) {
     var animalCount = 0;
     var farmAnimals = [];
 
@@ -27,7 +27,8 @@ $(function(numAnimals) {
     // Change 3rd param to currentSpeed and then calc currentActivity -> then can change speed and image will change
     function FarmAnimal(species, color, currentActivity) {
 
-        this.id = ++animalCount;
+        // Need to increment counter after because need prototype to be ID = 0
+        this.id = animalCount++;
         this.species = species;
         this.currentActivity = currentActivity;
         this.color = color;
@@ -44,24 +45,30 @@ $(function(numAnimals) {
         };
 
         this.speak = function() {
-            console.log(this.speakingSound);
+            if(this.species !== undefined) {
+                new Audio('sounds/' + this.species + '.wav').play();
+            }
         }
 
         console.log(this.whatAmI);
-        //this.speak();
+        this.speak();
     }
 
-    FarmAnimal.prototype.habitat;
-    FarmAnimal.prototype.speakingSound;
+    FarmAnimal.prototype.habitat = 'pasture';
 
+    function FarmAnimalFactory() {
+        this.birthAnimal = function(species, color, currentActivity) {
+            return new Horse(species, color, currentActivity);
+        }
+    }
 
     function RoamingAnimal() {
 
     }
 
-    function Horse() {
-
-        this.speakingSound = 'nay';
+    function Horse(species, color, currentActivity) {
+        FarmAnimal.call(this, species, color, currentActivity);
+        console.log("My habitat is " + this.habitat);
     }
     Horse.prototype = new FarmAnimal();
 
@@ -105,10 +112,13 @@ $(function(numAnimals) {
 
     }
 
+    // http://www.animal-sounds.org/farm-animal-sounds.html
     function speakHandler() {
         // The farmAnimals array is 0 based and the animal id's are 1 based
         //console.log(farmAnimals[this.id - 1]);
-        farmAnimals[this.id - 1].identify();
+
+        farmAnimals[this.id - 1].speak();
+        //farmAnimals[this.id - 1].identify();
     }
 
     var i = setInterval(function(){
@@ -122,33 +132,34 @@ $(function(numAnimals) {
         $('div.pasture').append('<img id="' + counter + '" class="cow animal" src="' + animal.getImageName() + '" />')
         counter++;
         */
-        var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2].activity );
+        var animal = new Horse( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2].activity );
+
         farmAnimals.push(animal);
 
         $('div.pasture').each(function() {
-            var img = $('<img id="' + animal.id + '" class="cow animal" src="' + animal.getImageName() + '" />');
+            var img = $('<img id="' + animal.id + '" class="' + animal.species.toLowerCase() + ' animal" src="' + animal.getImageName() + '" />');
             $(this).append(img);
             img.click(speakHandler);
         });
 
-        if(animal.id >= numAnimals) {
+        if(animal.id >= maxNumAnimals) {
             clearInterval(i);
         }
-    }, 300);
+    }, 1000);
 
 
 
 
     /*
-    for (var i = 0; i < numAnimals; i++) {
+    for (var i = 0; i < maxNumAnimals; i++) {
         var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[0], animalSpecies[0].activities[0] );
         $('div.fenced').append('<img class="cow animal" src="' + animal.getImageName() + '" />')
     }
 
-    for (var i = 0; i < numAnimals; i++) {
+    for (var i = 0; i < maxNumAnimals; i++) {
         var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2] );
         $('div.pasture').append('<img class="cow animal" src="' + animal.getImageName() + '" />')
     }
 */
     console.log(farmAnimals.length);
-}(5))
+}(3))
