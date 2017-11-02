@@ -56,12 +56,6 @@ $(function(maxNumAnimals) {
 
     FarmAnimal.prototype.habitat = 'pasture';
 
-    function FarmAnimalFactory() {
-        this.birthAnimal = function(species, color, currentActivity) {
-            return new Horse(species, color, currentActivity);
-        }
-    }
-
     function RoamingAnimal() {
 
     }
@@ -112,14 +106,33 @@ $(function(maxNumAnimals) {
 
     }
 
+    function FarmAnimalFactory() {
+        this.birthAnimal = function(species, color, currentActivity) {
+            switch(species) {
+                case 'Cow':
+                    return new Horse(species, color, currentActivity);
+                    break;
+                case 'Horse':
+                    return new Horse(species, color, currentActivity);
+                    break;
+                default:
+                    return new Horse(species, color, currentActivity);
+            }
+
+        }
+    }
+
+
     // http://www.animal-sounds.org/farm-animal-sounds.html
     function speakHandler() {
         // The farmAnimals array is 0 based and the animal id's are 1 based
         //console.log(farmAnimals[this.id - 1]);
 
-        farmAnimals[this.id - 1].speak();
-        //farmAnimals[this.id - 1].identify();
+        //farmAnimals[this.id - 1].speak();
+        farmAnimals[this.id - 1].identify();
     }
+
+    var factory = new FarmAnimalFactory();
 
     var i = setInterval(function(){
         // do your thing
@@ -132,7 +145,8 @@ $(function(maxNumAnimals) {
         $('div.pasture').append('<img id="' + counter + '" class="cow animal" src="' + animal.getImageName() + '" />')
         counter++;
         */
-        var animal = new Horse( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2].activity );
+        //var animal = new Horse( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2].activity );
+        var animal = factory.birthAnimal( 'Cow', animalSpecies[0].colors[1], animalSpecies[0].activities[2].activity );
 
         farmAnimals.push(animal);
 
@@ -162,4 +176,4 @@ $(function(maxNumAnimals) {
     }
 */
     console.log(farmAnimals.length);
-}(3))
+}(1))
