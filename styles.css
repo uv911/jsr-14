@@ -1,0 +1,38 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  background: url("http://forums.newtek.com/attachment.php?attachmentid=111115&d=1360046655") no-repeat;
+  background-size: cover;
+}
+.animal {
+  height: 150px;
+  width: 150px;
+  position: absolute;
+  bottom: 100px;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+}
+
+.pasture {
+  position: relative;
+  top: 325px;
+  left: 75px;
+}
+.fenced {
+  position: relative;
+  top: 400px;
+  left: 600px;
+}
+.horse {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.cow {
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
