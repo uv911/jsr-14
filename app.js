@@ -294,7 +294,12 @@ $(function(maxNumAnimals) {
     var factory = new FarmAnimalFactory();
 
     var i = setInterval(function(){
-        var animal = factory.birthAnimal('Random', 'Random', 'Random');
+        var animal;
+        if (farmAnimals.length % 3 === 0) {
+            animal = factory.birthAnimal('Goose', 'Random', 'Flying1');
+        } else {
+            animal = factory.birthAnimal('Random', 'Random', 'Random');
+        }
         //var animal = factory.birthAnimal('Horse', 'Random', 'Random');
         farmAnimals.push(animal);
 
@@ -325,4 +330,4 @@ $(function(maxNumAnimals) {
     }
 */
     //console.log(farmAnimals.length);
-}(25))
+}(35))
