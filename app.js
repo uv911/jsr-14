@@ -5,11 +5,61 @@ $(function(maxNumAnimals) {
 
 
     var animalSpecies = [
+        {   species: 'Chicken',
+            colors: ['White'],
+            activities: [
+                {   activity: 'Standing',
+                    maxSpeed: 0
+                },
+                {   activity: 'Laying',
+                    maxSpeed: 0
+                }
+            ]
+        },
+        {   species: 'Cow',
+            colors: ['White', 'Brown'],
+            activities: [
+                {   activity: 'Walking',
+                    maxSpeed: 3
+                },
+                {   activity: 'Looking',
+                    maxSpeed: 0
+                },
+                {   activity: 'Standing',
+                    maxSpeed: 0
+                }
+            ]
+        },
+        {   species: 'Goat',
+            colors: ['Brown'],
+            activities: [
+                {   activity: 'Standing',
+                    maxSpeed: 0
+                }
+            ]
+        },
+        {   species: 'Goose',
+            colors: ['White'],
+            activities: [
+                {   activity: 'Flying1',
+                    maxSpeed: 10
+                },
+                {   activity: 'Flying2',
+                    maxSpeed: 10
+                },
+                {   activity: 'Swimming1',
+                    maxSpeed: 1
+                },
+                {   activity: 'Swimming2',
+                    maxSpeed: 1
+                }
+            ]
+        },
         {   species: 'Horse',
             colors: ['Brown', 'Black'],
             activities: [
-                {   activity: 'Running',
-                    maxSpeed: 23
+                {   activity: 'Galloping',
+                    maxSpeed: 20
                 },
                 {   activity: 'Walking',
                     maxSpeed: 6
@@ -17,8 +67,37 @@ $(function(maxNumAnimals) {
                 {   activity: 'Standing',
                     maxSpeed: 0
                 }
-            ],
-            maxSpeed: 23
+            ]
+        },
+        {   species: 'Pig',
+            colors: ['Pink'],
+            activities: [
+                {   activity: 'Standing',
+                    maxSpeed: 0
+                }
+            ]
+        },
+        {   species: 'Rooster',
+            colors: ['Brown'],
+            activities: [
+                {   activity: 'Standing',
+                    maxSpeed: 0
+                }
+            ]
+        },
+        {   species: 'Sheep',
+            colors: ['White'],
+            activities: [
+                {   activity: 'Running',
+                    maxSpeed: 6
+                },
+                {   activity: 'Sitting',
+                    maxSpeed: 0
+                },
+                {   activity: 'Standing',
+                    maxSpeed: 0
+                }
+            ]
         }];
 /*,
         {   species: 'Sheep'},
@@ -33,28 +112,41 @@ $(function(maxNumAnimals) {
         this.currentActivity = currentActivity;
         this.color = color;
 
+
         this.whatAmI = "I am a " + this.color + ' ' + this.species + " that is " + this.currentActivity + " and I have the ear tag number " + this.id;
 
         this.getId = function() { return this.id; };
         this.getSpecies = function() { return this.species; };
-        this.getImageName = function() { return 'images/' + this.species + this.color + this.currentActivity + '.png'; };
+        this.calcImageName = function() {
+            if(this.species === undefined) {
+                return 'images/DefaultAnimal.png';
+            } else {
+                return 'images/' + this.species + this.color + this.currentActivity + '.png';
+            }
+        };
+
+        this.imageName = this.calcImageName();
 
         this.identify = function() {
             var msg = new SpeechSynthesisUtterance(this.whatAmI);
             window.speechSynthesis.speak(msg);
         };
 
+        // http://www.animal-sounds.org/farm-animal-sounds.html
         this.speak = function() {
             if(this.species !== undefined) {
                 new Audio('sounds/' + this.species + '.wav').play();
             }
         }
+        var realName = this.calcImageName();
+        //console.log(this.calcImageName());
+        //this.imageName = (realName.length === "INVALID") ? "images/DefaultAnimal.png" : realName;
 
-        console.log(this.whatAmI);
-        this.speak();
+
+
     }
 
-    FarmAnimal.prototype.habitat = 'pasture';
+    FarmAnimal.prototype.habitat;
 
     function RoamingAnimal() {
 
@@ -62,32 +154,57 @@ $(function(maxNumAnimals) {
 
     function Horse(species, color, currentActivity) {
         FarmAnimal.call(this, species, color, currentActivity);
-        console.log("My habitat is " + this.habitat);
+        this.habitat = 'pasture';
+        //console.log("My habitat is " + this.habitat);
     }
     Horse.prototype = new FarmAnimal();
 
-    function Sheep() {
-
+    function Sheep(species, color, currentActivity) {
+        FarmAnimal.call(this, species, color, currentActivity);
+        this.habitat = 'pasture';
     }
+
+    function Goat(species, color, currentActivity) {
+        FarmAnimal.call(this, species, color, currentActivity);
+        this.habitat = 'fenced2';
+    }
+
 
     function CagedAnimal() {
 
     }
 
-    function Cow() {
-
+    function Cow(species, color, currentActivity) {
+        FarmAnimal.call(this, species, color, currentActivity);
+        this.habitat = 'fenced';
     }
 
-    function Pig() {
-
+    function Pig(species, color, currentActivity) {
+        FarmAnimal.call(this, species, color, currentActivity);
+        this.habitat = 'fenced2';
     }
 
     function SwimmingAnimal() {
 
     }
 
-    function Duck() {
+    function Rooster(species, color, currentActivity) {
+        FarmAnimal.call(this, species, color, currentActivity);
+        this.habitat = 'coop';
+    }
 
+    function Chicken(species, color, currentActivity) {
+        FarmAnimal.call(this, species, color, currentActivity);
+        this.habitat = 'coop';
+    }
+
+    function Goose(species, color, currentActivity) {
+        FarmAnimal.call(this, species, color, currentActivity);
+        if(this.currentActivity.match(/swimming/i)) {
+            this.habitat = 'water';
+        } else {
+            this.habitat = 'air';
+        }
     }
 
     function Habitat() {
@@ -108,26 +225,68 @@ $(function(maxNumAnimals) {
 
     function FarmAnimalFactory() {
         this.birthAnimal = function(species, color, currentActivity) {
-            switch(species) {
-                case 'Cow':
-                    return new Horse(species, color, currentActivity);
-                    break;
-                case 'Horse':
-                    return new Horse(species, color, currentActivity);
-                    break;
-                default:
-                    return new Horse(species, color, currentActivity);
+            var animal = null;
+            var speciesRowNum = 0;
+            if (species === 'Random') {
+                speciesRowNum = chooseRandomPosition(animalSpecies)
+                species = animalSpecies[speciesRowNum].species;
+            } else {
+                for (var i = 0; i < animalSpecies.length; i++) {
+                    if (animalSpecies[i].species === species) {
+                        speciesRowNum = i;
+                        break;
+                    }
+                }
+
             }
 
+            if (color === 'Random') {
+                color = animalSpecies[speciesRowNum].colors[chooseRandomPosition(animalSpecies[speciesRowNum].colors)];
+            }
+
+            if (currentActivity === 'Random') {
+                currentActivity = animalSpecies[speciesRowNum].activities[chooseRandomPosition(animalSpecies[speciesRowNum].activities)].activity;
+            }
+
+            switch(species) {
+                case 'Cow':
+                    animal = new Cow(species, color, currentActivity);
+                    break;
+                case 'Horse':
+                    animal = new Horse(species, color, currentActivity);
+                    break;
+                case 'Goat':
+                    animal = new Goat(species, color, currentActivity);
+                    break;
+                case 'Sheep':
+                    animal = new Sheep(species, color, currentActivity);
+                    break;
+                case 'Pig':
+                    animal = new Pig(species, color, currentActivity);
+                    break;
+                case 'Chicken':
+                    animal = new Chicken(species, color, currentActivity);
+                    break;
+                case 'Rooster':
+                    animal = new Rooster(species, color, currentActivity);
+                    break;
+                case 'Goose':
+                    animal = new Goose(species, color, currentActivity);
+                    break;
+                default:
+                    animal = null;//new Horse(species, color, currentActivity);
+            }
+
+            console.log(animal.whatAmI);
+            animal.speak();
+            return animal;
         }
     }
 
 
-    // http://www.animal-sounds.org/farm-animal-sounds.html
+
     function speakHandler() {
         // The farmAnimals array is 0 based and the animal id's are 1 based
-        //console.log(farmAnimals[this.id - 1]);
-
         //farmAnimals[this.id - 1].speak();
         farmAnimals[this.id - 1].identify();
     }
@@ -135,23 +294,13 @@ $(function(maxNumAnimals) {
     var factory = new FarmAnimalFactory();
 
     var i = setInterval(function(){
-        // do your thing
-        /*
-        var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[0], animalSpecies[0].activities[0].activity );
-        $('div.fenced').append('<img id="' + counter + '" class="horse animal" src="' + animal.getImageName() + '" />')
-        counter++;
-
-        var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2].activity );
-        $('div.pasture').append('<img id="' + counter + '" class="cow animal" src="' + animal.getImageName() + '" />')
-        counter++;
-        */
-        //var animal = new Horse( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2].activity );
-        var animal = factory.birthAnimal( 'Cow', animalSpecies[0].colors[1], animalSpecies[0].activities[2].activity );
-
+        var animal = factory.birthAnimal('Random', 'Random', 'Random');
+        //var animal = factory.birthAnimal('Horse', 'Random', 'Random');
         farmAnimals.push(animal);
 
-        $('div.pasture').each(function() {
-            var img = $('<img id="' + animal.id + '" class="' + animal.species.toLowerCase() + ' animal" src="' + animal.getImageName() + '" />');
+        var selector = 'div.' + animal.habitat;
+        $(selector).each(function() {
+            var img = $('<img id="' + animal.id + '" class="animal ' + animal.species.toLowerCase() + ' ' + animal.currentActivity.toLowerCase() + ' " src="' + animal.imageName + '" />');
             $(this).append(img);
             img.click(speakHandler);
         });
@@ -159,7 +308,7 @@ $(function(maxNumAnimals) {
         if(animal.id >= maxNumAnimals) {
             clearInterval(i);
         }
-    }, 1000);
+    }, 2000);
 
 
 
@@ -167,13 +316,13 @@ $(function(maxNumAnimals) {
     /*
     for (var i = 0; i < maxNumAnimals; i++) {
         var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[0], animalSpecies[0].activities[0] );
-        $('div.fenced').append('<img class="cow animal" src="' + animal.getImageName() + '" />')
+        $('div.fenced').append('<img class="cow animal" src="' + animal.calcImageName() + '" />')
     }
 
     for (var i = 0; i < maxNumAnimals; i++) {
         var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2] );
-        $('div.pasture').append('<img class="cow animal" src="' + animal.getImageName() + '" />')
+        $('div.pasture').append('<img class="cow animal" src="' + animal.calcImageName() + '" />')
     }
 */
-    console.log(farmAnimals.length);
-}(1))
+    //console.log(farmAnimals.length);
+}(25))

@@ -6,33 +6,99 @@ body {
   background: url("http://forums.newtek.com/attachment.php?attachmentid=111115&d=1360046655") no-repeat;
   background-size: cover;
 }
+
+.air {
+  position: absolute;
+  margin-left: 375px;
+  top: 200px;
+  left: 75px;
+}
+
+.pasture {
+  position: absolute;
+  bottom: 365px;
+  left: 25px;
+}
+
+.coop {
+  position: absolute;
+  top: 675px;
+  left: 950px;
+}
+
+.fenced {
+  position: absolute;
+  bottom: 10px;
+  left: 250px;
+}
+
+.fenced2 {
+  position: absolute;
+  bottom: 140px;
+  left: 875px;
+}
+
+.water {
+  position: absolute;
+  top: 900px;
+  left: 1500px;
+}
+
 .animal {
   height: 150px;
   width: 150px;
-  position: absolute;
-  bottom: 100px;
+  position: relative;
+
   cursor: pointer;
   background-size: cover;
   background-position: center;
 }
 
-.pasture {
-  position: relative;
-  top: 325px;
-  left: 75px;
+.chicken {
+  height: 60px;
+  width: 60px;
 }
-.fenced {
-  position: relative;
-  top: 400px;
-  left: 600px;
+
+.cow {
+}
+.goat {
+  height: 110px;
+  width: 70px;
+}
+.goose {
+  height: 75px;
+  width: 75px;
 }
 .horse {
-  position: relative;
-  top: 0;
-  left: 0;
 }
-.cow {
-  position: relative;
-  top: 10px;
-  left: 10px;
+.pig {
+  height: 90px;
+  width: 90px;
 }
+.rooster {
+  height: 70px;
+  width: 70px;
+}
+.sheep {
+  height: 100px;
+  width: 100px;
+}
+
+.performing {
+  height: 200px;
+  width: 70px;
+}
+
+.galloping {
+
+  width: 200px;
+}
+
+.running {
+
+  width: 150px;
+}
+
+
+
+
