@@ -295,7 +295,7 @@ $(function(maxNumAnimals) {
 
     var i = setInterval(function(){
         var animal;
-        if (farmAnimals.length % 3 === 0) {
+        if (farmAnimals.length % 5 === 0) {
             animal = factory.birthAnimal('Goose', 'Random', 'Flying1');
         } else {
             animal = factory.birthAnimal('Random', 'Random', 'Random');
