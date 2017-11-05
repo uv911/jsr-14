@@ -99,19 +99,20 @@ $(function(maxNumAnimals) {
                 }
             ]
         }];
-/*,
-        {   species: 'Sheep'},
-            colors: [{'Cow'}, {'Pig'}, {'Duck'}];
-*/
-    // Change 3rd param to currentSpeed and then calc currentActivity -> then can change speed and image will change
+
     function FarmAnimal(species, color, currentActivity) {
 
-        // Need to increment counter after because need prototype to be ID = 0
-        this.id = animalCount++;
+        // Need prototypes to be ID = 0
+        if(species === undefined) {
+            this.id = 0;
+        } else {
+            // Need to increment counter before because want animals to have ID > 0
+            this.id = ++animalCount;
+        }
+
         this.species = species;
         this.currentActivity = currentActivity;
         this.color = color;
-
 
         this.whatAmI = "I am a " + this.color + ' ' + this.species + " that is " + this.currentActivity + " and I have the ear tag number " + this.id;
 
@@ -125,7 +126,7 @@ $(function(maxNumAnimals) {
             }
         };
 
-        this.imageName = this.calcImageName();
+        this.imageName = (species === undefined) ? "images/DefaultAnimal.png" : this.calcImageName();
 
         this.identify = function() {
             var msg = new SpeechSynthesisUtterance(this.whatAmI);
@@ -138,19 +139,9 @@ $(function(maxNumAnimals) {
                 new Audio('sounds/' + this.species + '.wav').play();
             }
         }
-        var realName = this.calcImageName();
-        //console.log(this.calcImageName());
-        //this.imageName = (realName.length === "INVALID") ? "images/DefaultAnimal.png" : realName;
-
-
-
     }
 
     FarmAnimal.prototype.habitat;
-
-    function RoamingAnimal() {
-
-    }
 
     function Horse(species, color, currentActivity) {
         FarmAnimal.call(this, species, color, currentActivity);
@@ -163,40 +154,37 @@ $(function(maxNumAnimals) {
         FarmAnimal.call(this, species, color, currentActivity);
         this.habitat = 'pasture';
     }
+    Sheep.prototype = new FarmAnimal();
 
     function Goat(species, color, currentActivity) {
         FarmAnimal.call(this, species, color, currentActivity);
         this.habitat = 'fenced2';
     }
-
-
-    function CagedAnimal() {
-
-    }
+    Goat.prototype = new FarmAnimal();
 
     function Cow(species, color, currentActivity) {
         FarmAnimal.call(this, species, color, currentActivity);
         this.habitat = 'fenced';
     }
+    Cow.prototype = new FarmAnimal();
 
     function Pig(species, color, currentActivity) {
         FarmAnimal.call(this, species, color, currentActivity);
         this.habitat = 'fenced2';
     }
-
-    function SwimmingAnimal() {
-
-    }
+    Pig.prototype = new FarmAnimal();
 
     function Rooster(species, color, currentActivity) {
         FarmAnimal.call(this, species, color, currentActivity);
         this.habitat = 'coop';
     }
+    Rooster.prototype = new FarmAnimal();
 
     function Chicken(species, color, currentActivity) {
         FarmAnimal.call(this, species, color, currentActivity);
         this.habitat = 'coop';
     }
+    Chicken.prototype = new FarmAnimal();
 
     function Goose(species, color, currentActivity) {
         FarmAnimal.call(this, species, color, currentActivity);
@@ -206,22 +194,7 @@ $(function(maxNumAnimals) {
             this.habitat = 'air';
         }
     }
-
-    function Habitat() {
-
-    }
-
-    function Pasture() {
-
-    }
-
-    function Caged() {
-
-    }
-
-    function Water() {
-
-    }
+    Goose.prototype = new FarmAnimal();
 
     function FarmAnimalFactory() {
         this.birthAnimal = function(species, color, currentActivity) {
@@ -237,7 +210,6 @@ $(function(maxNumAnimals) {
                         break;
                     }
                 }
-
             }
 
             if (color === 'Random') {
@@ -283,8 +255,6 @@ $(function(maxNumAnimals) {
         }
     }
 
-
-
     function speakHandler() {
         // The farmAnimals array is 0 based and the animal id's are 1 based
         //farmAnimals[this.id - 1].speak();
@@ -315,19 +285,5 @@ $(function(maxNumAnimals) {
         }
     }, 2500);
 
-
-
-
-    /*
-    for (var i = 0; i < maxNumAnimals; i++) {
-        var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[0], animalSpecies[0].activities[0] );
-        $('div.fenced').append('<img class="cow animal" src="' + animal.calcImageName() + '" />')
-    }
-
-    for (var i = 0; i < maxNumAnimals; i++) {
-        var animal = new FarmAnimal( 'Horse', animalSpecies[0].colors[1], animalSpecies[0].activities[2] );
-        $('div.pasture').append('<img class="cow animal" src="' + animal.calcImageName() + '" />')
-    }
-*/
-    //console.log(farmAnimals.length);
+// Pass the max number of animals allowed on the farm
 }(30))

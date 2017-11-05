@@ -3,7 +3,8 @@ html, body {
   width: 100%;
 }
 body {
-  background: url("http://forums.newtek.com/attachment.php?attachmentid=111115&d=1360046655") no-repeat;
+  background: url("images/FarmBackgroundImage.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
 }
 
