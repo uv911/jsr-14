@@ -313,7 +313,7 @@ $(function(maxNumAnimals) {
         if(animal.id >= maxNumAnimals) {
             clearInterval(i);
         }
-    }, 2000);
+    }, 2500);
 
 
 
@@ -330,4 +330,4 @@ $(function(maxNumAnimals) {
     }
 */
     //console.log(farmAnimals.length);
-}(35))
+}(30))
