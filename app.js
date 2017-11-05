@@ -102,7 +102,7 @@ $(function(maxNumAnimals) {
 
     function FarmAnimal(species, color, currentActivity) {
 
-        // Need prototypes to be ID = 0
+        // Need prototypes to be ID = 0 - Sonyl
         if(species === undefined) {
             this.id = 0;
         } else {
@@ -117,6 +117,7 @@ $(function(maxNumAnimals) {
         this.whatAmI = "I am a " + this.color + ' ' + this.species + " that is " + this.currentActivity + " and I have the ear tag number " + this.id;
 
         this.getId = function() { return this.id; };
+        // Sonyl
         this.getSpecies = function() { return this.species; };
         this.calcImageName = function() {
             if(this.species === undefined) {
@@ -130,11 +131,11 @@ $(function(maxNumAnimals) {
 
         this.identify = function() {
             var msg = new SpeechSynthesisUtterance(this.whatAmI);
-            window.speechSynthesis.speak(msg);
+            window.speechSynthesis.talk(msg);
         };
 
         // http://www.animal-sounds.org/farm-animal-sounds.html
-        this.speak = function() {
+        this.talk = function() {
             if(this.species !== undefined) {
                 new Audio('sounds/' + this.species + '.wav').play();
             }
@@ -250,14 +251,14 @@ $(function(maxNumAnimals) {
             }
 
             console.log(animal.whatAmI);
-            animal.speak();
+            animal.talk();
             return animal;
         }
     }
 
-    function speakHandler() {
+    function talkHandler() {
         // The farmAnimals array is 0 based and the animal id's are 1 based
-        //farmAnimals[this.id - 1].speak();
+        //farmAnimals[this.id - 1].talk();
         farmAnimals[this.id - 1].identify();
     }
 
@@ -277,7 +278,7 @@ $(function(maxNumAnimals) {
         $(selector).each(function() {
             var img = $('<img id="' + animal.id + '" class="animal ' + animal.species.toLowerCase() + ' ' + animal.currentActivity.toLowerCase() + ' " src="' + animal.imageName + '" />');
             $(this).append(img);
-            img.click(speakHandler);
+            img.click(talkHandler);
         });
 
         if(animal.id >= maxNumAnimals) {
