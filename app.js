@@ -131,7 +131,7 @@ $(function(maxNumAnimals) {
 
         this.identify = function() {
             var msg = new SpeechSynthesisUtterance(this.whatAmI);
-            window.speechSynthesis.talk(msg);
+            window.speechSynthesis.speak(msg);
         };
 
         // http://www.animal-sounds.org/farm-animal-sounds.html
@@ -287,4 +287,4 @@ $(function(maxNumAnimals) {
     }, 2500);
 
 // Pass the max number of animals allowed on the farm
-}(30))
+}(3))
